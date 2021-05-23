@@ -1,40 +1,56 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
+	<meta charset="UTF-8">
 
-	<title>GrandPy, le papy-robot</title>
+	<title>{{ title }}</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}" />
-<link href='http://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>	
-<link rel="shortcut icon" href="{{ url_for('static', filename='img/icon.ico') }}">
-<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}" />
+	<link href='http://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
+	<link rel="shortcut icon" href="{{ url_for('static', filename='img/icon.ico') }}">
 </head>
+
 <body>
-<div class="grid-container">
-  <header>
-  	<h1><a href="/index">{{ title }}</a></h1>
-  </header>
-  <content>
-  	<div class="lorem">
-  <h2>Parcours utilisateur</h2>
-	<p>L'utilisateur ouvre son navigateur et entre l'URL que vous lui avez fournie. Il arrive devant une page contenant les éléments suivants :<br>
-	header : logo et phrase d'accroche <br>
-	zone centrale : zone vide (qui servira à afficher le dialogue) et champ de formulaire pour envoyer une question. <br>
-	footer : votre prénom & nom, lien vers votre repository Github et autres réseaux sociaux si vous en avez <br>
-	<p>L'utilisateur tape <blockquote>"Salut GrandPy ! Est-ce que tu connais l'adresse d'OpenClassrooms ?"</blockquote> dans le champ de formulaire puis appuie sur la touche Entrée. Le message s'affiche dans la zone du dessus qui affiche tous les messages échangés. Une icône tourne pour indiquer que GrandPy est en train de réfléchir.</p>
-	<p>Puis un nouveau message apparaît : <blockquote>"Bien sûr mon poussin ! La voici : 7 cité Paradis, 75010 Paris."</blockquote></p> <p>En-dessous, une carte Google Maps apparaît également avec un marqueur indiquant l'adresse demandée.<br>
-	GrandPy envoie un nouveau message : <blockquote>"Mais t'ai-je déjà raconté l'histoire de ce quartier qui m'a vu en culottes courtes ? La cité Paradis est une voie publique située dans le 10e arrondissement de Paris. Elle est en forme de té, une branche débouche au 43 rue de Paradis, la deuxième au 57 rue d'Hauteville et la troisième en impasse."</blockquote> </p>
- 
+	<div class="grid-container">
+		<header>
+			<h1><a href="/index">{{ title }}</a></h1>
+		</header>
+		<content>
+			<div class="lorem">
+				<h2>Parcours utilisateur</h2>
+				<p>L'utilisateur ouvre son navigateur et entre l'URL que vous lui avez fournie. Il arrive devant une
+					page contenant les éléments suivants :<br>
+					header : logo et phrase d'accroche <br>
+					zone centrale : zone vide (qui servira à afficher le dialogue) et champ de formulaire pour envoyer
+					une question. <br>
+					footer : votre prénom & nom, lien vers votre repository Github et autres réseaux sociaux si vous en
+					avez <br>
+				<p>L'utilisateur tape
+				<blockquote>"Salut GrandPy ! Est-ce que tu connais l'adresse d'OpenClassrooms ?"</blockquote> dans le
+				champ de formulaire puis appuie sur la touche Entrée. Le message s'affiche dans la zone du dessus qui
+				affiche tous les messages échangés. Une icône tourne pour indiquer que GrandPy est en train de
+				réfléchir.</p>
+				<p>Puis un nouveau message apparaît :
+				<blockquote>"Bien sûr mon poussin ! La voici : 7 cité Paradis, 75010 Paris."</blockquote>
+				</p>
+				<p>En-dessous, une carte Google Maps apparaît également avec un marqueur indiquant l'adresse
+					demandée.<br>
+					GrandPy envoie un nouveau message :
+				<blockquote>"Mais t'ai-je déjà raconté l'histoire de ce quartier qui m'a vu en culottes courtes ? La
+					cité Paradis est une voie publique située dans le 10e arrondissement de Paris. Elle est en forme de
+					té, une branche débouche au 43 rue de Paradis, la deuxième au 57 rue d'Hauteville et la troisième en
+					impasse."</blockquote>
+				</p>
+
+			</div>
+		</content>
+		<footer>
+			<p>Jérome_LorD Github 2021 OC GrandPy Project</p>
+		</footer>
 	</div>
-  </content>
-  <footer>
-    <p>Jérome_LorD Github 2021 OC GrandPy Project</p>	
-  </footer>
-</div>
 </body>
+
 </html>
