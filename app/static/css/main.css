@@ -29,17 +29,19 @@ html, body {
 }
 
 a {
-	color: #c3c2c2;
+	color: #8F8D8D;
+	text-decoration: none;
 }
 
 a:hover, a:focus {
-	color: #8F8D8D;
+	color: #c3c2c2;
 }
 
 header { 
 	grid-area: header; 
 	background-color: #333333;
 	padding: 10px 0;
+	/* background: linear-gradient(#000, #4a4a4a, #000); */
 }
 
 header h1 a{
@@ -54,8 +56,11 @@ header h1{
 
 content { 
 	grid-area: content; 
-	background-color: #dbdbdb;
+	background-color: #151515;
+}
 
+content h2 {
+	color: #708c2f;
 }
 
 footer { 
@@ -65,7 +70,7 @@ footer {
 	color: #8e8e8e;
 }
 
-.lorem { /* temporary content */
+.thematic { 
 	margin: 2% 20%;
 	padding: 5px 5px;	
 	border-radius: 4px;
@@ -76,6 +81,47 @@ blockquote {
 	background-color: #9b9b9b;
 	padding: 5px 5px;
 	border-radius: 7px;
+}
+
+ul {
+	display: inline-block;
+	padding: 0;
+}
+
+li.sign  {
+	list-style-type: none;
+	display: inline-block;
+	margin: 0px 2em;
+}
+
+.txtArea {
+	background-color: #e1e1e1;
+	width: 100%;
+	max-width: 100%;
+	min-width: 50%;
+	max-height: 150px;
+	min-height: 50px;
+	height: 100px;
+	border-radius: 10px;
+}
+
+.validate {
+	background-color: #708c2f;
+	color: #e1e1e1;
+	width: 300px;
+	height: 50px;
+	font-size: 1.7em;
+	border-radius: 10px;
+	border: none;
+	cursor: pointer;
+}
+
+.validate:hover {
+	background-color: #628f33;
+	color: #e1e1e1;
+	box-shadow: -1px 1px 4px -2px rgba(0,0,0,0.52);
+	-webkit-box-shadow: -1px 1px 4px -2px rgba(0,0,0,0.52);
+	-moz-box-shadow: -1px 1px 4px -2px rgba(0,0,0,0.52);
 }
 
 @media only screen and (max-width: 600px) {
@@ -91,7 +137,7 @@ blockquote {
 		transition: all 2s 0s ease;
 	}
 
-	.lorem { /* temporary content */
+	.thematic { /* temporary content */
 		margin: 2% 5%;
 		padding: 5px 5px;	
 		border-radius: 4px;

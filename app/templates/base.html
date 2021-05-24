@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+
+	<title>{{ title }}</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}" />
+	<link href='http://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
+	<link rel="shortcut icon" href="{{ url_for('static', filename='img/icon.ico') }}">
+</head>
+
+<body>
+	<div class="grid-container">
+		<header>
+			<h1><a href="/index">{{ title }}</a></h1>
+		</header>
+		<content>
+			<div class="thematic">
+				{% block content %}{% endblock %}
+			</div>
+
+			<div class="thematic">
+				{% block search %}{% endblock %}
+			</div>
+		</content>
+		<footer>
+			<ul>
+				<li class="sign"><a href="https://github.com/Jerome-LorD/P7_GrandPy"> Jérome-LorD on Github</a></li>
+				<li class="sign">2021 OC GrandPy Project</li>
+			</ul>
+		</footer>
+	</div>
+</body>
+
+</html>
