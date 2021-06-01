@@ -1,16 +1,3 @@
-# from app.models.parser import ParserHTML
-
-
-# question1 = "Salut GrandPy, quelle est l'adresse de Tintin ?"
-
-
-# def test_extract_valuable_datas():
-#     """
-#     Return sanitized string without the words in the stopWords list.
-#     """
-#     result = ParserHTML().extract_valuable_datas(question1)
-#     assert result == "Salut GrandPy, l'adresse Tintin ?"
-
 import re
 import json
 
