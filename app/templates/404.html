@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block notFound %}
+
+<div class="thematic">
+    <h1>Cette page n'existe pas.</h1>
+    <img class="notFound" src="{{url_for('static', filename='img/404.png')}}" />
+
+</div>
+{% endblock %}
