@@ -1,5 +1,5 @@
-let question = document.querySelector("#form-quest");
-let postQuest = document.querySelector("#inputQuest");
+let question = document.querySelector("#form_quest");
+let postQuest = document.querySelector("#input_quest");
 let url = "/ajax";
 
 function postJsonData(url, data, headers) {
@@ -31,16 +31,16 @@ question.addEventListener("submit", function (e) {
             responseDiv.replaceChild(h2, h2Base);
 
             var pre = document.createElement("pre");
-            pre.id = "respText";
+            pre.id = "resp_text";
             var pre_content = document.createTextNode(answer);
             pre.appendChild(pre_content);
-            var preBase = document.getElementById("respText");
+            var preBase = document.getElementById("resp_text");
             var parentDiv = preBase.parentNode;
             parentDiv.replaceChild(pre, preBase);
 
             document.getElementById("response").style.display = "block";
             document.getElementById("map").style.height = "400px";
-            document.getElementById("inputQuest").value = "";
+            document.getElementById("input_quest").value = "";
 
             let coords = jsonResponse["coords"]["location"];
 
