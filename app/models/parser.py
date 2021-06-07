@@ -12,40 +12,40 @@ class Parser:
         """Init."""
 
         self.selected_words = []
-        self.quotePattern = r"l'|d'|j'|qu'|m'|n'|qu'|t'"
+        self.quotePattern = r"l'|d'|m'|n'|qu'|s'|t'|\,|\?|\.|\!"
 
-    def stopWords(self):
+    def stop_words(self):
         """Load a french word list from file."""
         with open(Config.JSON_DIR / "fr.json", encoding="utf-8") as f:
             return json.load(f)
 
-    def isolate_keywords(self, sanitized_text):
-        self.quotePattern = r"l'|d'|m'|n'|qu'|s'|t'|\,"
-        onlyWords = re.sub(self.quotePattern, "", sanitized_text)
-        return onlyWords
+    def remove_defined_articles(self, text):
+        """Remove french defined articles with apostrophe."""
+        cleaned_text = re.sub(self.quotePattern, "", text)
+        return cleaned_text.strip()
+
+    def replace_malicious_text(self, text):
+        """Relace malicious text."""
+        refusedChars = r"[\<\>]{1,}|[$|*|£|¤|#|~|&|`|^|\"]{2,}|(.)\1{4,}|\
+        \W*(alert)\W*|\W*(script)\W*"
+        goodText = "montmartre"
+        return goodText if re.search(refusedChars, text) else text
 
     def sanitize_text(self, text):
-        """emove str in stop_word list."""
-        self.selected_words = []
+        """Remove str in stop_word list."""
+        lowerTxt = text.lower()
+        return " ".join(
+            [word for word in lowerTxt.split() if word not in self.stop_words()]
+        )
 
+    def isolate_target(self, text):
         for word in text.split():
-            if word in self.stopWords():
-                pass
-            else:
-                self.selected_words.append(word)
-        return " ".join(self.selected_words)
-
-    def isolated_target(self, text):
-        """apture and isolate the targeted place."""
-        targeted = []
-        for word in text.split():
-            if word[0].isupper():
-                targeted.append(word)
-        return " ".join(word for word in targeted if word not in hello.keys())
+            if word in hello.keys():
+                target = text.replace(word, "")
+                return target.strip()
+        return text
 
     def greetings(self, text):
         """Return the same greetings as those sent."""
-        self.hello = hello
-        for word in text.split():
-            if word in self.hello.keys():
-                return self.hello[word]
+        greets = [hello[word] for word in text.split() if word in hello.keys()]
+        return "".join(greets) if len(greets) > 0 else "Des infos :"
