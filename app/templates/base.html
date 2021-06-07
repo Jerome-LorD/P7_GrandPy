@@ -1,39 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 
 <head>
 	<meta charset="UTF-8">
 
 	<title>{{ title }}</title>
 
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta name="viewport" content="initial-scale=1.0, width=device-width" />
 
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}" />
 	<link href='http://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
 	<link rel="shortcut icon" href="{{ url_for('static', filename='img/icon.ico') }}">
+
+	{% block googleJS %}{% endblock %}
+
 </head>
 
 <body>
-	<div class="grid-container">
-		<header>
-			<h1><a href="/index">{{ title }}</a></h1>
-		</header>
-		<content>
-			<div class="thematic">
-				{% block content %}{% endblock %}
-			</div>
-
-			<div class="thematic">
+	<div class="grid-container" id="container">
+		{% block header %}{% endblock %}
+		<main>
+			<article>
+				{% block notFound %}{% endblock %}
+				{# block memo #}{# endblock #}
+				{# block presentation #}{# endblock #}
+				{% block response %}{% endblock %}
 				{% block search %}{% endblock %}
-			</div>
-		</content>
-		<footer>
-			<ul>
-				<li class="sign"><a href="https://github.com/Jerome-LorD/P7_GrandPy"> Jérome-LorD on Github</a></li>
-				<li class="sign">2021 OC GrandPy Project</li>
-			</ul>
-		</footer>
+				{% block postJS %}{% endblock %}
+			</article>
+		</main>
+		{% block footer %}{% endblock %}
 	</div>
+
+	<!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+	<script src="https://maps.googleapis.com/maps/api/js?key={{apikey}}&callback=initMap&libraries=&v=weekly" async>
+	</script>
+
 </body>
 
 </html>
