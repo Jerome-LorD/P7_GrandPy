@@ -1,8 +1,5 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-import os
-import re
-
 
 from flask import jsonify
 from flask import request
@@ -12,45 +9,41 @@ from . import app
 from .forms import ResearchForm
 
 from .models.parser import Parser
+from .models.google_api import GoogleAPI
+from .models.wiki_api import WikiAPI
 
 
 @app.route("/")
-@app.route("/index", methods=["POST", "GET"])
+@app.route("/index")
 def research():
 
-    refusedChars = (
-        r"[\<\>]{1,}|[$|*|£|¤|#|~|&|`|^|\"|\']{2,}|\W*(alert)\W*|\W*(script)\W*"
+    return render_template(
+        "index.html",
+        title="GrandPy, le papy-robot",
+        apikey=app.config["GOOGLE_KEY"],
+        apisign=app.config["GOOGLE_SIGN"],
     )
-    form = ResearchForm()
 
+
+@app.route("/ajax", methods=["POST"])
+def ajax():
     if request.method == "POST":
+        data = request.get_json()
+        print(data)
+        parser = Parser()
+        question = parser.replace_malicious_text(data["question"])
+        isolated_kw = parser.remove_defined_articles(question)
+        sanitized_txt = parser.sanitize_text(isolated_kw)
+        quest = parser.isolate_target(sanitized_txt)
+        greetings = parser.greetings(sanitized_txt)
 
-        question = request.values.get("search", default=0, type=str)
-        filtered_quest = re.search(refusedChars, question)
-        if filtered_quest:
-            questionF = "Bonjour GrandPy, quel jour sommes-nous ?"
-        else:
-            isolated_kw = Parser().isolate_keywords(question)
-            sanitized_txt = Parser().sanitize_text(isolated_kw)
-            questionF = Parser().isolated_target(sanitized_txt)
+        place = GoogleAPI()
+        coordinates = place.extract_data(quest)
+        print(coordinates)
+        wiki = WikiAPI()
+        histo = wiki.extract_data(coordinates)
 
-        form.search.data = ""
-        return render_template(
-            "index.html",
-            title="GrandPy, le papy-robot",
-            form=form,
-            apikey=app.config["GOOGLE_KEY"],
-            apiSign=app.config["GOOGLE_SIGN"],
-            quest=questionF,
-        )
-    else:
-        return render_template(
-            "index.html",
-            title="GrandPy, le papy-robot",
-            form=form,
-            apikey=app.config["GOOGLE_KEY"],
-            apiSign=app.config["GOOGLE_SIGN"],
-        )
+        return jsonify(answer=histo, coords=coordinates, greetings=greetings)
 
 
 @app.errorhandler(404)
