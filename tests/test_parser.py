@@ -1,95 +1,74 @@
-import re
-import json
+import pytest
 
-from config import Config
-from app.models.utils import hello
+from app.models.parser import Parser
 
 
-class TestParser:
-    """
-    Test if Text Parser return sanitized string.
-    """
-
-    def stopWords(self):
-        """Load a french word list from file."""
-        with open(Config.JSON_DIR / "fr.json", encoding="utf-8") as f:
-            return json.load(f)
-
-    def isolate_keywords(self, sanitized_text):
-        self.quotePattern = r"l'|d'|m'|n'|qu'|s'|t'|\,"
-        onlyWords = re.sub(self.quotePattern, "", sanitized_text)
-        return onlyWords
-
-    def sanitize_text(self, text):
-        """
-        Remove str in stop_word list
-        """
-        self.selected_words = []
-
-        for word in text.split():
-            if word in self.stopWords():
-                pass
-            else:
-                self.selected_words.append(word)
-        return " ".join(self.selected_words)
-
-    def isolated_target(self, text):
-        """
-        Capture and isolate the targeted place.
-        """
-        targeted = []
-        for word in text.split():
-            if word[0].isupper():
-                targeted.append(word)
-        return " ".join(word for word in targeted if word not in hello.keys())
-
-    def greetings(self, text):
-        """
-        Return the same greetings as those sent.
-        """
-        self.hello = hello
-        for word in text.split():
-            if word in self.hello.keys():
-                return self.hello[word]
+quest1 = "Salut GrandPy, quelle est l'adresse de la Tour Eiffel s'il te plait ?"
+quest2 = "Hello, <script>alert('bla')</script>"
+quest3 = "Hello GrandPy, montre moi les Chutes du Niagara"
 
 
-question1 = "Salut GrandPy, quelle est l'adresse de la Tour Eiffel s'il te plait ?"
+@pytest.mark.parametrize(
+    "base_text, cleaned_text",
+    [
+        (quest1, "Salut GrandPy quelle est adresse de la Tour Eiffel il te plait"),
+        (quest2, "montmartre"),
+        (quest3, "Hello GrandPy montre moi les Chutes du Niagara"),
+    ],
+)
+def test_remove_defined_articles(base_text, cleaned_text):
+    """Rmove."""
+    parser = Parser()
+
+    goodText = parser.replace_malicious_text(base_text)
+    print("mon test", base_text, goodText)
+    result = parser.remove_defined_articles(goodText)
+    assert result == cleaned_text
 
 
-def test_sanitize_text():
-    """
-    Return sanitized string without the words in the stopWords list.
-    """
-    isolated_kw = TestParser().isolate_keywords(question1)
-    result = TestParser().sanitize_text(isolated_kw)
-    print(result)
-    assert result == "Salut adresse Tour Eiffel plait ?"
+@pytest.mark.parametrize(
+    "base_text, cleaned_text",
+    [
+        (quest1, "salut tour eiffel"),
+        (quest2, "montmartre"),
+        (quest3, "hello chutes niagara"),
+    ],
+)
+def test_sanitize_text(base_text, cleaned_text):
+    """Return sanitized string without the words in the stopWords list."""
+    parser = Parser()
+    question = parser.replace_malicious_text(base_text)
+    isolated_kw = parser.remove_defined_articles(question)
+    result = parser.sanitize_text(isolated_kw)
+    assert result == cleaned_text
 
 
-def test_isolate_keywords():
-    """
-    Remove prefixed french quotes to keep only words.
-    """
-    isolated_text = TestParser().isolate_keywords(question1)
-    result = TestParser().sanitize_text(isolated_text)
-    print(result)
-    assert result == "Salut adresse Tour Eiffel plait ?"
+@pytest.mark.parametrize(
+    "base_text, cleaned_text",
+    [(quest1, "tour eiffel"), (quest2, "montmartre"), (quest3, "chutes niagara")],
+)
+def test_isolate_target(base_text, cleaned_text):
+    parser = Parser()
+    question = parser.replace_malicious_text(base_text)
+    isolated_kw = parser.remove_defined_articles(question)
+    sanitized_txt = parser.sanitize_text(isolated_kw)
+    result = parser.isolate_target(sanitized_txt)
+    assert result == cleaned_text
 
 
-def test_isolated_target():
-    isolated_kw = TestParser().isolate_keywords(question1)
-    sanitized_txt = TestParser().sanitize_text(isolated_kw)
-    result = TestParser().isolated_target(sanitized_txt)
-    print(result)
-    assert result == "Tour Eiffel"
-
-
-def test_is_hello_in_sentence():
-    """
-    Use the same greetings in return.
-    """
-    isolated_kw = TestParser().isolate_keywords(question1)
-    sanitized_txt = TestParser().sanitize_text(isolated_kw)
-    result = TestParser().greetings(sanitized_txt)
-    print(result)
-    assert result == "Salut toi, j'ai l'adresse que tu cherches : "
+@pytest.mark.parametrize(
+    "base_text, cleaned_text",
+    [
+        (quest1, "Salut toi, j'ai l'adresse que tu cherches : "),
+        (quest2, "Des infos :"),
+        (quest3, "Hiii ! How are you ? J'ai trouvé ton bonheur : "),
+    ],
+)
+def test_greetings(base_text, cleaned_text):
+    """Use the same greetings in return."""
+    parser = Parser()
+    question = parser.replace_malicious_text(base_text)
+    isolated_kw = parser.remove_defined_articles(question)
+    sanitized_txt = parser.sanitize_text(isolated_kw)
+    result = parser.greetings(sanitized_txt)
+    assert result == cleaned_text
