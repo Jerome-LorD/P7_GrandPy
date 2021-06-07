@@ -1,10 +1,11 @@
+"""Module Wiki api."""
 import requests
 
 from config import Config
 
 
 class WikiAPI:
-    """Tests wiki."""
+    """Wikipedia API."""
 
     def __init__(self):
         """Init."""
@@ -20,14 +21,15 @@ class WikiAPI:
             "exsentences": "5",
             "exlimit": "1",
             "explaintext": 1,
+            "exsectionformat": "plain",
         }
 
         self.headers = {
             "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
         }
 
-    def extractData(self, coords) -> str:
-        """Extract data."""
+    def extract_data(self, coords: dict) -> str:
+        """Extract data from dict and return str."""
         try:
             lat = coords["location"]["lat"]
             lng = coords["location"]["lng"]
