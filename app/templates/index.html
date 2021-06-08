@@ -13,9 +13,9 @@
 {% block search %}
 <div class="thematic">
     <h2 id="wdyw">Découvrir un lieu, en connaître plus à son sujet ?</h2>
-    <form id="form-quest" enctype="multipart/form-data">
-        <input type="text" id="inputQuest" class="text-input" name="quest" placeholder="Posez moi votre question"
-            required>
+    <form id="form_quest" enctype="multipart/form-data">
+        <input type="text" id="input_quest" class="text_input" pattern="\w*|[\,|\!|\,|\.|\-|\'|\?|\;|\:]"
+            title="Only chars" name="quest" placeholder="Posez moi votre question" required>
         <p><input type="submit" class="validate" value="Rechercher"></p>
     </form>
 </div>
@@ -26,7 +26,7 @@
     <h2 id="greetings"></h2>
     <div id="map"></div>
     <blockquote>
-        <pre id="respText"></pre>
+        <pre id="resp_text"></pre>
     </blockquote>
 </div>
 {% endblock %}
