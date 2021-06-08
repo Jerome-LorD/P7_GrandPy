@@ -39,4 +39,5 @@ def test_extractData():
     assert result == {
         "location": {"lat": 43.0828162, "lng": -79.07416289999999},
         "address": "Niagara Falls, NY 14303, United States",
+        "name": "Niagara Falls",
     }
