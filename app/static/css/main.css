@@ -21,10 +21,6 @@
     "footer";
 }
 
-* html body {
-	background-color: red;
-	}
-
 html, body {
     width: 100%;
     height: 100%;
@@ -79,6 +75,7 @@ footer {
 	padding: 5px 5px;	
 	border-radius: 4px;
 	background-color: #b5b5b5;
+	cursor: auto;
 }
 
 blockquote {
@@ -109,7 +106,7 @@ li.sign  {
 	margin: 0px 2em;
 }
 
-.kw_text_input {
+.text_input {
 	background-color: #e1e1e1;
 	width: 100%;
 	max-width: 100%;
@@ -144,7 +141,7 @@ input:focus-visible {
 	-moz-box-shadow: -1px 1px 4px -2px rgba(0,0,0,0.52);
 }
 
-.notFound {
+.not_found {
 	max-width: 100%;
 	height: auto;
 }
