@@ -1,10 +1,23 @@
 {% extends "base.html" %}
 
 {% block notFound %}
-
 <div class="thematic">
     <h1>Cette page n'existe pas.</h1>
-    <img class="notFound" src="{{url_for('static', filename='img/404.png')}}" />
-
+    <img class="not_found" src="{{url_for('static', filename='img/404.png')}}" />
 </div>
+{% endblock %}
+
+{% block header %}
+<header>
+    <h1><a href="{{ url_for('index') }}">{{ title }}</a></h1>
+</header>
+{% endblock %}
+
+{% block footer %}
+<footer>
+    <ul>
+        <li class="sign"><a href="https://github.com/Jerome-LorD/P7_GrandPy"> Jérome-LorD on Github</a></li>
+        <li class="sign">2021 OC GrandPy Project</li>
+    </ul>
+</footer>
 {% endblock %}
