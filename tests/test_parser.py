@@ -17,10 +17,9 @@ quest3 = "Hello GrandPy, montre moi les Chutes du Niagara"
     ],
 )
 def test_remove_defined_articles(base_text, cleaned_text):
-    """Rmove."""
     parser = Parser()
 
-    goodText = parser.replace_malicious_text(base_text)
+    goodText = parser.replace_unwanted_chars(base_text)
     print("mon test", base_text, goodText)
     result = parser.remove_defined_articles(goodText)
     assert result == cleaned_text
@@ -35,9 +34,8 @@ def test_remove_defined_articles(base_text, cleaned_text):
     ],
 )
 def test_sanitize_text(base_text, cleaned_text):
-    """Return sanitized string without the words in the stopWords list."""
     parser = Parser()
-    question = parser.replace_malicious_text(base_text)
+    question = parser.replace_unwanted_chars(base_text)
     isolated_kw = parser.remove_defined_articles(question)
     result = parser.sanitize_text(isolated_kw)
     assert result == cleaned_text
@@ -49,7 +47,7 @@ def test_sanitize_text(base_text, cleaned_text):
 )
 def test_isolate_target(base_text, cleaned_text):
     parser = Parser()
-    question = parser.replace_malicious_text(base_text)
+    question = parser.replace_unwanted_chars(base_text)
     isolated_kw = parser.remove_defined_articles(question)
     sanitized_txt = parser.sanitize_text(isolated_kw)
     result = parser.isolate_target(sanitized_txt)
@@ -65,9 +63,8 @@ def test_isolate_target(base_text, cleaned_text):
     ],
 )
 def test_greetings(base_text, cleaned_text):
-    """Use the same greetings in return."""
     parser = Parser()
-    question = parser.replace_malicious_text(base_text)
+    question = parser.replace_unwanted_chars(base_text)
     isolated_kw = parser.remove_defined_articles(question)
     sanitized_txt = parser.sanitize_text(isolated_kw)
     result = parser.greetings(sanitized_txt)
