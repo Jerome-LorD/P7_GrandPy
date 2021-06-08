@@ -31,6 +31,7 @@ class GoogleAPI:
             return {
                 "location": data["results"][0]["geometry"]["location"],
                 "address": data["results"][0]["formatted_address"],
+                "name": data["results"][0]["name"],
             }
 
         except requests.exceptions.RequestException as e:
