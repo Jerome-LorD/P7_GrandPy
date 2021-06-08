@@ -2,14 +2,18 @@ let question = document.querySelector("#form_quest");
 let postQuest = document.querySelector("#input_quest");
 let url = "/ajax";
 
-function postJsonData(url, data, headers) {
-    return fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: headers
-    })
-        .then((response) => response.json())
-        .catch(err => console.warn(err));
+async function postJsonData(url, data, headers) {
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: headers
+        });
+        return await response.json();
+
+    } catch (err) {
+        return console.warn(err);
+    }
 }
 
 question.addEventListener("submit", function (e) {
@@ -19,31 +23,46 @@ question.addEventListener("submit", function (e) {
         "Content-Type": "application/json"
     })
         .then(jsonResponse => {
-            let answer = jsonResponse["answer"]
-            let greetings = jsonResponse["greetings"]
+            let answer = jsonResponse.answer;
+            let greetings = jsonResponse.greetings;
+            let name = jsonResponse.coords.name;
+            let address = jsonResponse.coords.address;
 
-            var h2 = document.createElement("h2");
-            h2.id = "greetings";
-            var h2_content = document.createTextNode(greetings);
-            h2.appendChild(h2_content);
-            var h2Base = document.getElementById("greetings");
-            var responseDiv = h2Base.parentNode;
-            responseDiv.replaceChild(h2, h2Base);
+            setTimeout(function () {
+                let h2 = document.createElement("h2");
+                h2.id = "greetings";
+                let h2_content = document.createTextNode(greetings + name + ", " + address);
+                h2.appendChild(h2_content);
+                let h2Base = document.getElementById("greetings");
+                let responseDiv = h2Base.parentNode;
+                responseDiv.replaceChild(h2, h2Base);
 
-            var pre = document.createElement("pre");
-            pre.id = "resp_text";
-            var pre_content = document.createTextNode(answer);
-            pre.appendChild(pre_content);
-            var preBase = document.getElementById("resp_text");
-            var parentDiv = preBase.parentNode;
-            parentDiv.replaceChild(pre, preBase);
+                let pre = document.createElement("pre");
+                pre.id = "resp_text";
+                let pre_content = document.createTextNode(answer);
+                pre.appendChild(pre_content);
+                let preBase = document.getElementById("resp_text");
+                let parentDiv = preBase.parentNode;
+                parentDiv.replaceChild(pre, preBase);
 
-            document.getElementById("response").style.display = "block";
-            document.getElementById("map").style.height = "400px";
-            document.getElementById("input_quest").value = "";
+                document.getElementById("response").style.display = "block";
+                document.getElementById("map").style.height = "400px";
+                document.getElementById("input_quest").value = "";
 
-            let coords = jsonResponse["coords"]["location"];
+                let location = jsonResponse["coords"]["location"];
 
-            if (coords) { initMap(coords); }
+                if (location && name) { initMap(location, name); } else {
+
+                }
+
+                for (let i = 0; i < thematic.length; i++) {
+                    thematic[i].style.cursor = "initial";
+                }
+            }, 2000);
+
+            let thematic = document.getElementsByClassName('thematic');
+            for (let i = 0; i < thematic.length; i++) {
+                thematic[i].style.cursor = "wait";
+            }
         })
 })
