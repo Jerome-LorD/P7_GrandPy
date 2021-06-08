@@ -1,15 +1,15 @@
 let map;
-function initMap(coords) {
-    if (coords !== undefined) {
+function initMap(location, name) {
+    if (location !== undefined) {
 
         map = new google.maps.Map(document.getElementById("map"), {
-            center: coords,
+            center: location,
             zoom: 15,
         });
         new google.maps.Marker({
-            position: coords,
+            position: location,
             map,
-            // title: "Hello World!",
+            title: name,
         });
     }
 }
