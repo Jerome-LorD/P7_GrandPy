@@ -160,17 +160,6 @@ input:focus-visible {
 	height: auto;
 }
 
-
-#map {
-	width: auto;
-	height: 0px;
-	border-radius: 4px;
-	margin: 2% 20%;
-	border-radius: 4px;
-	background-color: #b5b5b5;
-	cursor: auto;	
-}
-
 .map {
 	width: auto;
 	height: 400px;
@@ -221,7 +210,7 @@ input:focus-visible {
 		cursor: auto;	
 	}	
 
-	#map {
+	.map {
 		width: auto;
 		border-radius: 4px;
 		-webkit-box-shadow: 2px 2px 20px 2px #686868; 
@@ -231,6 +220,9 @@ input:focus-visible {
 		border-radius: 4px;
 		background-color: #b5b5b5;
 		cursor: auto;	
+	}
+	.map:last-child {
+		border-radius: 4px;
 	}
 }
 
