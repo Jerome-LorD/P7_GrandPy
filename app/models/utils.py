@@ -1,12 +1,13 @@
+"""Utils module."""
 hello = {
-    "Bonjour": "Bonjour cher visiteur, voici : ",
-    "Bonjour": "Bonjour mon pousin, voici : ",
-    "Bonjour": "Bonjour mon canard, voici : ",
-    "Salut": "Salut toi, j'ai l'adresse que tu cherches : ",
-    "Hello": "Hiii ! How are you ? J'ai trouvé ton bonheur : ",
+    "bonjour": "Bonjour mon canard, tes infos : ",
+    "salut": "Salut toi, bien sûr, voici tes infos : ",
+    "hello": "Hiii ! How are you ? Voici tes infos : ",
 }
 
+insult_pattern = r"connard|conne|\bcon\b|pute|salope|connasse|bite|couille|débile"
+
 moreInfo = [
-    "Mais t'ai-je déjà raconté ",
+    "Et je peux te dire que " "Mais t'ai-je déjà raconté ",
     "l'histoire de ce quartier qui m'a vu en culottes courtes ? ",
 ]
