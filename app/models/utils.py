@@ -3,6 +3,7 @@ hello = {
     "bonjour": "Bonjour mon canard, tes infos : ",
     "salut": "Salut toi, bien sûr, voici tes infos : ",
     "hello": "Hiii ! How are you ? Voici tes infos : ",
+    "coucou": "Coucou ! Voici tes infos : ",
 }
 
 insult_pattern = r"connard|conne|\bcon\b|pute|salope|connasse|bite|couille|débile"
