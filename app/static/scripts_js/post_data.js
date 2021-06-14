@@ -76,10 +76,9 @@ question.addEventListener("submit", function (e) {
                     if (jsonResponse.coords !== "undefined" && name) {
                         let location = jsonResponse["coords"]["location"];
                         let p = document.createElement("p");
-                        p.id = "map2";
+                        p.className = "map";
                         document.querySelector("#resp").appendChild(p);
                         dial(initMap(location, name));
-                        document.getElementById("map").style.height = "400px";
                     }
                     setTimeout(function () {
                         dial(answer);
@@ -92,6 +91,5 @@ question.addEventListener("submit", function (e) {
 
             dial(sanitized_quest);
             document.getElementById("resp").style.display = "block";
-
         })
 })
