@@ -70,7 +70,6 @@ question.addEventListener("submit", function (e) {
                     initial();
                 } else {
                     dial(greetings + name + " se situe à cette adresse --> " + address);
-                    let = nodelst = document.querySelectorAll(".resp_indiv");
                 }
 
                 setTimeout(function () {
