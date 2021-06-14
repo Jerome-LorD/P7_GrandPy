@@ -43,8 +43,8 @@ def test_extract_data(monkeypatch):
     }
 
 
-class WikiWrongFakeResponse:
-    """Wiki API wrong fake response class."""
+class GoogleWrongFakeResponse:
+    """Google places API wrong fake response class."""
 
     def json(self):
         """Fake json."""
@@ -55,8 +55,8 @@ def test_extract_data_wrong_key(monkeypatch):
     """Test the return from a wrong key."""
 
     def mock_requests_get(*args, **kwargs):
-        """Mock request get returns Wiki wrong fake response."""
-        return WikiWrongFakeResponse()
+        """Mock request get returns Google wrong fake response."""
+        return GoogleWrongFakeResponse()
 
     monkeypatch.setattr(requests, "get", mock_requests_get)
 
