@@ -23,46 +23,76 @@ question.addEventListener("submit", function (e) {
         "Content-Type": "application/json"
     })
         .then(jsonResponse => {
+            let sanitized_quest = jsonResponse.sanitized_quest;
             let answer = jsonResponse.answer;
             let greetings = jsonResponse.greetings;
-            let name = jsonResponse.coords.name;
-            let address = jsonResponse.coords.address;
+            if (jsonResponse.coords) {
+                var name = jsonResponse.coords.name;
+                var address = jsonResponse.coords.address;
+            }
+            let quest_err = jsonResponse.quest_err;
 
-            setTimeout(function () {
-                let h2 = document.createElement("h2");
-                h2.id = "greetings";
-                let h2_content = document.createTextNode(greetings + name + ", " + address);
-                h2.appendChild(h2_content);
-                let h2Base = document.getElementById("greetings");
-                let responseDiv = h2Base.parentNode;
-                responseDiv.replaceChild(h2, h2Base);
+            let thematic = document.getElementsByClassName('thematic');
+            let container = document.getElementsByClassName('grid-container');
 
-                let pre = document.createElement("pre");
-                pre.id = "resp_text";
-                let pre_content = document.createTextNode(answer);
-                pre.appendChild(pre_content);
-                let preBase = document.getElementById("resp_text");
-                let parentDiv = preBase.parentNode;
-                parentDiv.replaceChild(pre, preBase);
-
-                document.getElementById("response").style.display = "block";
-                document.getElementById("map").style.height = "400px";
-                document.getElementById("input_quest").value = "";
-
-                let location = jsonResponse["coords"]["location"];
-
-                if (location && name) { initMap(location, name); } else {
-
+            function wait() {
+                for (let i = 0; i < thematic.length; i++) {
+                    thematic[i].style.cursor = "wait";
                 }
+                for (let i = 0; i < container.length; i++) {
+                    container[i].style.cursor = "wait";
+                }
+            }
 
+            function initial() {
                 for (let i = 0; i < thematic.length; i++) {
                     thematic[i].style.cursor = "initial";
                 }
+                for (let i = 0; i < container.length; i++) {
+                    container[i].style.cursor = "initial";
+                }
+            }
+
+            function dial(dialogue) {
+                if (dialogue !== undefined) {
+                    let pre = document.createElement("pre");
+                    pre.className = "resp_indiv";
+                    let preContent = document.createTextNode(dialogue);
+                    pre.appendChild(preContent);
+                    document.querySelector("#resp").appendChild(pre);
+                }
+                document.getElementById("input_quest").value = "";
+            }
+
+            setTimeout(function () {
+                if (quest_err) {
+                    dial(quest_err);
+                    initial();
+                } else {
+                    dial(greetings + name + " se situe à cette adresse --> " + address);
+                    let = nodelst = document.querySelectorAll(".resp_indiv");
+                }
+
+                setTimeout(function () {
+                    if (jsonResponse.coords !== "undefined" && name) {
+                        let location = jsonResponse["coords"]["location"];
+                        let p = document.createElement("p");
+                        p.id = "map2";
+                        document.querySelector("#resp").appendChild(p);
+                        dial(initMap(location, name));
+                        document.getElementById("map").style.height = "400px";
+                    }
+                    setTimeout(function () {
+                        dial(answer);
+                        initial();
+                    }, 2000);
+                }, 2000);
             }, 2000);
 
-            let thematic = document.getElementsByClassName('thematic');
-            for (let i = 0; i < thematic.length; i++) {
-                thematic[i].style.cursor = "wait";
-            }
+            wait();
+
+            dial(sanitized_quest);
+            document.getElementById("resp").style.display = "block";
+
         })
 })
