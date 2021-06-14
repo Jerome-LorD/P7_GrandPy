@@ -7,28 +7,23 @@
 {% block header %}
 <header>
     <h1><a href="{{ url_for('index') }}">{{ title }}</a></h1>
+    <p class="sub-logo">Le papy-robot omniscient ! Une question sur un lieu et vous saurez tout, ou presque.</p>
 </header>
 {% endblock %}
 
 {% block search %}
 <div class="thematic">
-    <h2 id="wdyw">Découvrir un lieu, en connaître plus à son sujet ?</h2>
+    <h2 id="wdyw">👴 Découvrir un lieu, en connaître plus à son sujet ?</h2>
     <form id="form_quest" enctype="multipart/form-data">
-        <input type="text" id="input_quest" class="text_input" pattern="\w*|[\,|\!|\,|\.|\-|\'|\?|\;|\:]"
-            title="Only chars" name="quest" placeholder="Posez moi votre question" required>
+        <input type="text" id="input_quest" class="text_input" title="Only chars" name="quest"
+            placeholder="Posez moi votre question" required>
         <p><input type="submit" class="validate" value="Rechercher"></p>
     </form>
 </div>
 {% endblock %}
 
 {% block response %}
-<div class="thematic" id="response">
-    <h2 id="greetings"></h2>
-    <div id="map"></div>
-    <blockquote>
-        <pre id="resp_text"></pre>
-    </blockquote>
-</div>
+<div id="resp"></div>
 {% endblock %}
 
 {% block postJS %}
