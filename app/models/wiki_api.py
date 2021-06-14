@@ -9,7 +9,6 @@ class WikiAPI:
 
     def __init__(self):
         """Init."""
-
         self.url = "https://fr.wikipedia.org/w/api.php?"
 
         self.payload = {
@@ -31,18 +30,26 @@ class WikiAPI:
     def extract_data(self, coords: dict) -> str:
         """Extract data from dict and return str."""
         try:
-            lat = coords["location"]["lat"]
-            lng = coords["location"]["lng"]
-            self.payload["ggscoord"] = f"{lat}|{lng}"
+            if isinstance(coords, dict):
+                lat = coords["location"]["lat"]
+                lng = coords["location"]["lng"]
 
-            req = requests.get(self.url, headers=self.headers, params=self.payload)
-            self.data = req.json()
+                self.payload["ggscoord"] = f"{lat}|{lng}"
 
-            if len(self.data) > 1:
+                req = requests.get(self.url, headers=self.headers, params=self.payload)
+                self.data = req.json()
+
                 pageid = next(iter(self.data["query"]["pages"]))
-                self.extract = self.data["query"]["pages"][pageid]["extract"]
-                return self.extract
-            return Config.MSG_NO_TEXT_FOUND
+                return self.data["query"]["pages"][pageid]["extract"]
+            else:
+
+                return Config.MSG_NO_TEXT_FOUND
 
         except requests.exceptions.RequestException as e:
-            raise SystemExit(e)
+            raise e
+
+        except KeyError as e:
+            print(e)
+
+        except ValueError:
+            return Config.MSG_NO_TEXT_FOUND
