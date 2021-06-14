@@ -6,9 +6,9 @@ A form of chat-bot that is the embodiment of an old man in as an omniscient robo
 
 ---
 
-This project works with the Flask framework.
+This project works with the `Flask` framework.
 
-You have to create a virtual environment and install what is in the requirements.txt there.
+You have to create a virtual environment and install what is in the `requirements.txt` there.
 
 To use it you must follow these indications:
 - by clicking on the green button "Code", get the link and
