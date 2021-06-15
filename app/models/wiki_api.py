@@ -30,26 +30,22 @@ class WikiAPI:
     def extract_data(self, coords: dict) -> str:
         """Extract data from dict and return str."""
         try:
-            if isinstance(coords, dict):
-                lat = coords["location"]["lat"]
-                lng = coords["location"]["lng"]
+            lat = coords["location"]["lat"]
+            lng = coords["location"]["lng"]
 
-                self.payload["ggscoord"] = f"{lat}|{lng}"
+            self.payload["ggscoord"] = f"{lat}|{lng}"
 
-                req = requests.get(self.url, headers=self.headers, params=self.payload)
-                self.data = req.json()
+            req = requests.get(self.url, headers=self.headers, params=self.payload)
+            self.data = req.json()
 
-                pageid = next(iter(self.data["query"]["pages"]))
-                return self.data["query"]["pages"][pageid]["extract"]
-            else:
-
-                return Config.MSG_NO_TEXT_FOUND
+            pageid = next(iter(self.data["query"]["pages"]))
+            return self.data["query"]["pages"][pageid]["extract"]
 
         except requests.exceptions.RequestException as e:
             raise e
 
-        except KeyError as e:
-            print(e)
+        except KeyError:
+            return Config.MSG_NO_TEXT_FOUND
 
         except ValueError:
             return Config.MSG_NO_TEXT_FOUND
