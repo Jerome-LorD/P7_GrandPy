@@ -46,7 +46,7 @@ def test_extract_data_wrong_key(monkeypatch):
 
     monkeypatch.setattr(requests, "get", mock_requests_get)
 
-    result = wiki.extract_data("test")
+    result = wiki.extract_data({"batchcomplete": ""})
     assert result == Config.MSG_NO_TEXT_FOUND
 
 
