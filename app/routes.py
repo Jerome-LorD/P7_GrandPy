@@ -21,42 +21,34 @@ def index():
     return render_template(
         "index.html",
         title=Config.TITLE_HTML,
-        apikey=app.config["GOOGLE_KEY"],
-        apisign=app.config["GOOGLE_SIGN"],
+        apikey=app.config["JS_API_KEY"],
     )
 
 
 @app.route("/ajax", methods=["POST"])
 def ajax():
     """Ajax post method."""
-    if request.method == "POST":
-        data = request.get_json()
-        parser = Parser()
-        question = parser.replace_unwanted_chars(data["question"])
-        isolated_kw = parser.remove_defined_articles(question)
-        sanitized_txt = parser.sanitize_text(isolated_kw)
-        quest = parser.isolate_target(sanitized_txt)
-        greetings = parser.greetings(sanitized_txt)
-        sanitized_quest = parser.replace_insult_to_stars(question)
+    data = request.get_json()
+    parser = Parser()
+    datas = parser.execute_parsing(data["question"])
 
-        place = GoogleAPI()
-        coordinates = place.extract_data(quest)
+    place = GoogleAPI()
+    coordinates = place.extract_data(datas["quest"])
 
-        if isinstance(coordinates, dict):
-            wiki = WikiAPI()
-            histo = wiki.extract_data(coordinates)
+    if coordinates:
+        wiki = WikiAPI()
+        histo = wiki.extract_data(coordinates)
 
-            return jsonify(
-                sanitized_quest=sanitized_quest,
-                answer=histo,
-                coords=coordinates,
-                greetings=greetings,
-            )
-        else:
-            return jsonify(
-                sanitized_quest=sanitized_quest,
-                quest_err=Config.MSG_DONT_UNSERSTAND,
-            )
+        return jsonify(
+            sanitized_quest=datas["sanitized_quest"],
+            answer=histo,
+            coords=coordinates,
+            greetings=datas["greetings"],
+        )
+    return jsonify(
+        sanitized_quest=datas["sanitized_quest"],
+        quest_err=Config.MSG_DONT_UNSERSTAND,
+    )
 
 
 @app.errorhandler(404)
