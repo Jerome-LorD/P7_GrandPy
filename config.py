@@ -11,9 +11,8 @@ class Config:
     """Config class."""
 
     SECRET_KEY = os.environ.get("SECRET_KEY") or "no way"
-    GOOGLE_KEY = os.getenv("APIKEY")
-    PLACES_KEY = os.getenv("PLACEAPIKEY")
-    GOOGLE_SIGN = os.getenv("SIGNATURE")
+    JS_API_KEY = os.getenv("JS_API_KEY")
+    PLACES_API_KEY = os.getenv("PLACES_API_KEY")
 
     BASE_DIR = Path(".")
     APP_DIR = BASE_DIR / "app"
