@@ -63,7 +63,7 @@ def test_extract_data_wrong_key(monkeypatch):
     result = googleApi.extract_data(
         {"location": {"lat": 36.1069258, "lng": -112.1129484}}
     )
-    assert result == "Je n'ai pas compris."
+    assert result is None
 
 
 def test_integration_extract_data():
