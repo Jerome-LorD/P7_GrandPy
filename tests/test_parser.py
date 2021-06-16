@@ -86,3 +86,23 @@ def test_if_the_insults_are_replaced_by_stars(base_text, cleaned_text):
     parser = Parser()
     result = parser.replace_insult_to_stars(base_text)
     assert result == cleaned_text
+
+
+@pytest.mark.parametrize(
+    "base_text, cleaned_text",
+    [
+        (
+            quest4,
+            {
+                "quest": "tour eiffel",
+                "greetings": "Des infos : ",
+                "sanitized_quest": "Affiche la tour eiffel le ****.",
+            },
+        ),
+    ],
+)
+def test_is_a_dict_with_greetings_and_sanitized_quest(base_text, cleaned_text):
+    """Verify if inslts are replaced by stars in text."""
+    parser = Parser()
+    result = parser.execute_parsing(base_text)
+    assert result == cleaned_text
