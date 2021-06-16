@@ -21,7 +21,7 @@ class WikiWrongFakeResponse:
 
     def json(self):
         """Fake json."""
-        return {"mock_key": ""}
+        return {"batchcomplete": ""}
 
 
 def test_extract_data(monkeypatch):
@@ -46,7 +46,7 @@ def test_extract_data_wrong_key(monkeypatch):
 
     monkeypatch.setattr(requests, "get", mock_requests_get)
 
-    result = wiki.extract_data({"batchcomplete": ""})
+    result = wiki.extract_data({"location": {"lat": 12.3456, "lng": -3.456789}})
     assert result == Config.MSG_NO_TEXT_FOUND
 
 
