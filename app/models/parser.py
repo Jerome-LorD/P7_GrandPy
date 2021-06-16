@@ -63,3 +63,17 @@ class Parser:
         """Return the same greetings as those sent."""
         greets = [hello[word] for word in text.split() if word in hello.keys()]
         return "".join(greets) if len(greets) > 0 else Config.MSG_NO_GREETINGS
+
+    def execute_parsing(self, text: str) -> dict:
+        """Return every data needed to front-end."""
+        question = self.replace_unwanted_chars(text)
+        isolated_kw = self.remove_defined_articles(question)
+        sanitized_txt = self.sanitize_text(isolated_kw)
+        quest = self.isolate_target(sanitized_txt)
+        greetings = self.greetings(sanitized_txt)
+        sanitized_quest = self.replace_insult_to_stars(question)
+        return {
+            "quest": quest,
+            "greetings": greetings,
+            "sanitized_quest": sanitized_quest,
+        }
