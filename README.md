@@ -22,8 +22,7 @@ This project works with the `Flask` framework.
    ```sh
    pip install -r requirements.tx
    ```
-4. Create a `.env` file at the root of the project
-Enter your API Key in it
+4. Create a `.env` file at the root of the project. Enter your API Key in it
    ```py
    SECRET_KEY=your key
    JS_API_KEY=your key
