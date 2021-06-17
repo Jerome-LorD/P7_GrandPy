@@ -9,7 +9,7 @@ load_dotenv(find_dotenv())
 
 class Config:
     """Config class."""
-
+    FLASK_ENV = os.getenv("FLASK_ENV")
     SECRET_KEY = os.environ.get("SECRET_KEY") or "no way"
     JS_API_KEY = os.getenv("JS_API_KEY")
     PLACES_API_KEY = os.getenv("PLACES_API_KEY")
@@ -25,3 +25,4 @@ class Config:
     MSG_NO_GREETINGS = "Des infos : "
 
     TITLE_HTML = "GrandPy, le papy-robot"
+    
