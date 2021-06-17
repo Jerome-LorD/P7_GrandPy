@@ -28,6 +28,7 @@ This project works with the `Flask` framework.
    ```
 5. Create a `.env` file at the root of the project. Enter your API Keys in it
    ```py
+   FLASK_ENV=development (or production)
    SECRET_KEY=your key
    JS_API_KEY=your key
    PLACES_API_KEY=your key
