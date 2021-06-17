@@ -55,7 +55,3 @@ def ajax():
 def page_not_found(error):
     """Error 404 page."""
     return render_template("404.html", title=Config.TITLE_HTML), 404
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
